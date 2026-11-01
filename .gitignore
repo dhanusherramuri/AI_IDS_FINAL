@@ -1,0 +1,20 @@
+# Ignore Results directories for all models
+DL/RESULTS/
+ML/RESULTS/
+PCC_RESULTS/
+
+# Ignore model files
+*.keras
+*.joblib
+*.json
+
+# Ignore cache and temporary files
+__pycache__/
+*.pyc
+*.pkl
+
+# Ignore environment variables and sensitive data
+.env
+
+# Ignore notebook outputs
+*.ipynb_checkpoints/

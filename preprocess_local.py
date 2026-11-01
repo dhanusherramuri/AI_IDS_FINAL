@@ -37,7 +37,7 @@ for _ in range(5):
         break
     _current_dir = parent
 
-LOCAL_DATASETS_DIR = os.path.join(_project_root, "datasets") if '_project_root' in dir() else "datasets"
+LOCAL_DATASETS_DIR = os.path.join(_project_root, "DATASETS") if '_project_root' in dir() else "DATASETS"
 THRESHOLD = "0.10"  # Must match COMMON/config.py THRESHOLD
 
 # Ensure datasets directory exists

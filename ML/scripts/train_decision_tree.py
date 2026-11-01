@@ -78,8 +78,8 @@ N_SPLITS = 10
 # ==========================================================
 
 DATASET_FILE = (
-    f"{PROJECT_ROOT}/PCC_RESULTS/"
-    f"threshold_{THRESHOLD}/reduced_dataset.csv"
+    f"{PROJECT_ROOT}/DATASETS/"
+    f"MERGED_CSV_PCC_Selected.csv"
 )
 
 MODEL_DIR = (

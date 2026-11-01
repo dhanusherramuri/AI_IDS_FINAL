@@ -82,10 +82,10 @@ N_SPLITS = 10
 # ==========================================================
 
 # Input dataset: reduced dataset from thresholded PCC results
-# Format: {PROJECT_ROOT}/datasets/threshold_{THRESHOLD}/reduced_dataset.csv
-# All scripts use common DATASETS folder at repo root level
+# Format: {PROJECT_ROOT}/DATASETS/threshold_{THRESHOLD}/reduced_dataset.csv
+# All scripts use common DATASETS folder at repo root level (uppercase, same level as ML/DL/DL)
 DATASET_FILE = (
-    f"{PROJECT_ROOT}/datasets/"
+    f"{PROJECT_ROOT}/DATASETS/"
     f"threshold_{THRESHOLD}/reduced_dataset.csv"
 )
 

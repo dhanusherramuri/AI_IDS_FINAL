@@ -184,11 +184,12 @@ def build_pcc_cnn(input_shape, classification="binary", num_classes=None):
 # PATHS
 # ==========================================================
 
-# Input dataset: reduced dataset derived from thresholded PCC results
-# Format: {PROJECT_ROOT}/PCC_RESULTS/threshold_{THRESHOLD}/reduced_dataset.csv
+# Input dataset: reduced dataset from thresholded PCC results
+# Format: {PROJECT_ROOT}/datasets/threshold_{THRESHOLD}/reduced_dataset.csv
+# All scripts use common DATASETS folder at repo root level
 
 DATASET_FILE = (
-    f"{PROJECT_ROOT}/PCC_RESULTS/"
+    f"{PROJECT_ROOT}/datasets/"
     f"threshold_{THRESHOLD}/reduced_dataset.csv"
 )
 

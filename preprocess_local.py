@@ -1,13 +1,13 @@
 """Local preprocessing script - 5% stratified sampling per attack class.
 
-Reads CSVs from DATASETS folder, samples 5% per Label group, writes to
-dataset/<user-specified-filename>.csv
+Reads CSVs from datasets folder, samples 5% per Label group, writes to
+datasets/threshold_<THRESHOLD>/reduced_dataset.csv
 
 IMPORTANT: 
 - To change the input CSV location, modify LOCAL_DATASETS_DIR below.
-- To change the output filename, modify LOCAL_OUTPUT_FILE below.
-- Ensure a folder named "dataset" exists in the same folder as the parent folder
-  (i.e., <project_root>/dataset/), or the script will create it automatically.
+- To change the output threshold, modify THRESHOLD below.
+- A folder named "datasets" will be created at repo root level.
+- The script generates threshold-specific reduced datasets inside datasets/.
 """
 
 import glob
@@ -18,14 +18,13 @@ import pandas as pd
 # Set these paths to your local environment:
 #   The script walks up from this file's location to find the repo root,
 #   then looks for datasets/ under it.
-#   Or set LOCAL_DATASETS_DIR and LOCAL_OUTPUT_FILE explicitly below.
+#   Or set LOCAL_DATASETS_DIR and THRESHOLD explicitly below.
 # 
 # IMPORTANT: 
-# - A folder named "dataset" must exist in the project root (parent folder),
-#   e.g., <project_root>/dataset/. The script will create it if missing.
+# - The script creates datasets/ folder at repo root if missing.
+# - It generates threshold-specific reduced datasets: datasets/threshold_<THRESHOLD>/reduced_dataset.csv
 # - To change the input CSV location, modify LOCAL_DATASETS_DIR below.
-# - To change the output filename (without .csv extension), modify 
-#   LOCAL_OUTPUT_FILE stem below.
+# - To change the threshold value, modify THRESHOLD below (must match COMMON/config.py).
 # 
 # Option 1: Auto-detect from repo root (default walks up 2 levels from this file)
 _current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -38,21 +37,25 @@ for _ in range(5):
         break
     _current_dir = parent
 
-LOCAL_DATASETS_DIR = os.path.join(_project_root, "dataset") if '_project_root' in dir() else "dataset"
-LOCAL_OUTPUT_FILE_STEM = "MERGED_CSV_Sampled_5Percent"
-LOCAL_OUTPUT_FILE = os.path.join(LOCAL_DATASETS_DIR, LOCAL_OUTPUT_FILE_STEM + ".csv")
+LOCAL_DATASETS_DIR = os.path.join(_project_root, "datasets") if '_project_root' in dir() else "datasets"
+THRESHOLD = "0.10"  # Must match COMMON/config.py THRESHOLD
+
+# Ensure datasets directory exists
+os.makedirs(LOCAL_DATASETS_DIR, exist_ok=True)
+
+# Create threshold-specific folder
+THRESHOLD_FOLDER = os.path.join(LOCAL_DATASETS_DIR, f"threshold_{THRESHOLD}")
+os.makedirs(THRESHOLD_FOLDER, exist_ok=True)
+
+LOCAL_OUTPUT_FILE = os.path.join(THRESHOLD_FOLDER, "reduced_dataset.csv")
 
 # Option 2: Override with explicit paths (uncomment and modify):
-# LOCAL_DATASETS_DIR = r"C:\path\to\your\CSVs\..\dataset"
-# LOCAL_OUTPUT_FILE_STEM = r"your_output_filename"
-# LOCAL_OUTPUT_FILE = r"C:\path\to\output\your_output_filename.csv"
+# LOCAL_DATASETS_DIR = r"C:\path\to\your\CSVs\..\datasets"
+# THRESHOLD = "0.10"
 # --------------------------------
 
 print(f"Project root: {_project_root}")
 print(f"Dataset dir:  {LOCAL_DATASETS_DIR}")
-
-# Ensure output directory exists
-os.makedirs(LOCAL_DATASETS_DIR, exist_ok=True)
 
 print(f"Output file:  {LOCAL_OUTPUT_FILE}")
 

@@ -46,7 +46,11 @@ AI_IDS_PROJECT_ROOT=/your/path python DL/scripts/train_cnn.py  # CNN model
 - `COMMON/config.py:11` sets `PROJECT_ROOT` from `AI_IDS_PROJECT_ROOT` environment variable
 - Default walks up 2 levels from `COMMON/` to reach repo root
 - Set `AI_IDS_PROJECT_ROOT=/your/path python script.py` to override
-- **Data under `PROJECT_ROOT/datasets/`** - place merged CSVs here for preprocessing
+- **DATASETS folder at repo root level** (`<PROJECT_ROOT>/datasets/`) - place all dataset files here for common access
+  - `datasets/MERGED_CSV_Sampled_5Percent.csv` - 5% stratified sample (used by threshold_feature_selection.py)
+  - `datasets/threshold_<X>/reduced_dataset.csv` - threshold-specific reduced datasets (used by RF, CNN after preprocessing)
+  - `datasets/MERGED_CSV_PCC_Selected.csv` - selected features dataset (used by XGBoost)
+- Preprocessing script (`preprocess_local.py`) generates threshold folders inside DATASETS
 
 ## Data Preprocessing
 Two workflows available — Colab (notebook) or local script.
@@ -59,8 +63,9 @@ python preprocess_local.py
 - Auto-detects repo root by walking up looking for `COMMON/`
 - Reads all `*.csv` files from `datasets/` folder
 - Takes **5% stratified sample** per `Label` group (`random_state=42`)
-- Writes single combined `MERGED_CSV_Sampled_5Percent.csv`
-- **Output saved to `datasets/` folder** - specify desired filename at top of script (see `LOCAL_OUTPUT_FILE_STEM`)
+- **Generates threshold-specific reduced datasets**: creates `datasets/threshold_<THRESHOLD>/reduced_dataset.csv`
+- Writes single combined `MERGED_CSV_Sampled_5Percent.csv` at `datasets/` root
+- **Output saved to `datasets/` folder** - specify desired threshold at top of script (see `THRESHOLD` variable)
 
 ### Colab (AI_IDS.ipynb)
 Update `dataset_path` and `output_file` variables in first cell to local paths.
